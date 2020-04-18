@@ -13,13 +13,13 @@ public class Line {
 	@JSONField(name = "dstRow")
 	private Integer dstRow;
 	//0未修改 1一般性 2复杂性
-	@JSONField(name="changeType")
-	private Integer changeType;
+	//@JSONField(name="changeType")
+	//private Integer changeType;
 
 	public Line() {
 	}
 
-	public Line(String text, int status, Integer srcRow, Integer dstRow, Integer changeType) {
+	public Line(String text, int status, Integer srcRow, Integer dstRow) {
 		this.text = text;
 		this.status = status;
 		if (srcRow != null)
@@ -30,7 +30,6 @@ public class Line {
 			this.dstRow = dstRow;
 		else
 			this.dstRow = 0;
-		this.changeType = changeType;
 	}
 
 	public int getSrcRow() {
@@ -63,14 +62,6 @@ public class Line {
 
 	public void setStatus(int status) {
 		this.status = status;
-	}
-
-	public Integer getChangeType() {
-		return changeType;
-	}
-
-	public void setChangeType(Integer changeType) {
-		this.changeType = changeType;
 	}
 
 }

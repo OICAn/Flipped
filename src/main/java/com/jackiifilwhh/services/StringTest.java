@@ -23,7 +23,7 @@ public class StringTest {
 			tmp = null;
 			str = null;
 			br = null;
-			br = new BufferedReader(new FileReader("E://testData//blank1.txt"));
+			br = new BufferedReader(new FileReader("E://testData//value1.txt"));
 			str = new ArrayList<>();
 			while ((tmp = br.readLine()) != null) {
 				str.add(tmp);
@@ -36,7 +36,10 @@ public class StringTest {
 			diff.myers();
 			diff.showDiff();
 			System.out.println(diff.getLineJSON());
-
+			System.out.println("------------------------------------------------------");
+			System.out.println(diff.getUsualJSON());
+			System.out.println("------------------------------------------------------");
+			System.out.println(diff.getUnusualJSON());
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

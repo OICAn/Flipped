@@ -3,8 +3,8 @@ package com.jackiifilwhh.services;
 public class Test {
 
 	public static void main(String[] args) {
-		String str1 = "int a = 6;";
-		String str2 = "while(a != 0);";
+		String str1 = "\t\tint a = 520;";
+		String str2 = "\t\tint a = 350;";
 		levenshtein(str1, str2);
 		System.out.println(EditDistance(str1, str2));
 	}

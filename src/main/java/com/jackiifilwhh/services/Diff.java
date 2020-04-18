@@ -11,6 +11,8 @@ public class Diff {
 	private ArrayList<Snake> snakes;
 	private ArrayList<Snake> result;
 	private ArrayList<Line> lines;
+	private ArrayList<Line> usualChanges;
+	private ArrayList<Line> unusualChanges;
 	private int srcLength;
 	private int dstLength;
 	private int oriX;
@@ -25,9 +27,11 @@ public class Diff {
 		snakes = new ArrayList<>();
 		result = new ArrayList<>();
 		lines = new ArrayList<>();
+		usualChanges = new ArrayList<>();
+		unusualChanges = new ArrayList<>();
 	}
 
-	protected void myers() {
+	public void myers() {
 		int max = srcLength + dstLength;
 		v = new int[2 * max];
 		oriX = 0;
@@ -97,7 +101,7 @@ public class Diff {
 		}
 	}
 
-	protected void showDiff() {
+	public void showDiff() {
 		int srcIndex = 0, dstIndex = 0;
 		for (int i = 0; i < result.size(); i++) {
 			Snake currPoint = result.get(i);
@@ -108,9 +112,10 @@ public class Diff {
 				if ((endK - startK) > 0) {
 					for (int j = 0; j < (endK - startK); j++) {
 						if (isSimpleChange(src[srcIndex]))
-							lines.add(new Line(src[srcIndex], 2, srcIndex + 1, null, 1));
+							usualChanges.add(new Line(src[srcIndex], 2, srcIndex + 1, null));
 						else
-							lines.add(new Line(src[srcIndex], 2, srcIndex + 1, null, 2));
+							unusualChanges.add(new Line(src[srcIndex], 2, srcIndex + 1, null));
+						lines.add(new Line(src[srcIndex], 2, srcIndex + 1, null));
 						// System.out.println("- " + src[srcIndex++]);
 						srcIndex++;
 						startX++;
@@ -118,9 +123,10 @@ public class Diff {
 				} else {
 					for (int j = 0; j < Math.abs(endK - startK); j++) {
 						if (isSimpleChange(dst[dstIndex]))
-							lines.add(new Line(dst[dstIndex], 1, null, dstIndex + 1, 1));
+							usualChanges.add(new Line(dst[dstIndex], 1, null, dstIndex + 1));
 						else
-							lines.add(new Line(dst[dstIndex], 1, null, dstIndex + 1, 2));
+							unusualChanges.add(new Line(dst[dstIndex], 1, null, dstIndex + 1));
+						lines.add(new Line(dst[dstIndex], 1, null, dstIndex + 1));
 						dstIndex++;
 						// System.out.println("+ " + dst[dstIndex++]);
 					}
@@ -128,23 +134,44 @@ public class Diff {
 			}
 			for (int j = startX; j < currPoint.getxEnd(); j++) {
 				// System.out.println(" " + src[srcIndex]);
-				lines.add(new Line(src[srcIndex], 0, srcIndex + 1, dstIndex + 1, 0));
+				lines.add(new Line(src[srcIndex], 0, srcIndex + 1, dstIndex + 1));
 				srcIndex++;
 				dstIndex++;
 			}
 		}
 	}
 
-	protected boolean isSimpleChange(String str) {
-		return isBlanked(str);
+	public boolean isSimpleChange(String str) {
+		//isBank只能放在第一个，用于筛选空串，避免后面方法出错
+		return isBlanked(str) || isNotes(str);
 	}
 
-	protected boolean isBlanked(String str) {
+	public boolean isBlanked(String str) {
 		return str.trim().length() == 0;
 	}
 
-	protected String getLineJSON() {
+	public boolean isNotes(String str) {
+		return str.trim().substring(0,2).equals("//");
+		//注释掉下面语句是为了能够正确处理包含在代码中的注释的语句
+		//return str.contains("//");
+	}
+	
+	public boolean isChangeValue(String str) {
+		return true;
+	}
+
+	public String getLineJSON() {
 		return JSON.toJSONString(lines, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue,
+				SerializerFeature.WriteDateUseDateFormat);
+	}
+
+	public String getUsualJSON() {
+		return JSON.toJSONString(usualChanges, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue,
+				SerializerFeature.WriteDateUseDateFormat);
+	}
+
+	public String getUnusualJSON() {
+		return JSON.toJSONString(unusualChanges, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue,
 				SerializerFeature.WriteDateUseDateFormat);
 	}
 
