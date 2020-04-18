@@ -4,7 +4,7 @@ public class Test {
 
 	public static void main(String[] args) {
 		String str1 = "int a = 6;";
-		String str2 = "for ( int i = 0; i < 5; i++);";
+		String str2 = "while(a != 0);";
 		levenshtein(str1, str2);
 		System.out.println(EditDistance(str1, str2));
 	}

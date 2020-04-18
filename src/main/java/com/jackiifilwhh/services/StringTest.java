@@ -11,7 +11,7 @@ public class StringTest {
 
 	public static void main(String[] args) {
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("E://test1.txt"));
+			BufferedReader br = new BufferedReader(new FileReader("E://testData//raw.txt"));
 			String tmp = null;
 			List<String> str = new ArrayList<>();
 			while ((tmp = br.readLine()) != null) {
@@ -23,7 +23,7 @@ public class StringTest {
 			tmp = null;
 			str = null;
 			br = null;
-			br = new BufferedReader(new FileReader("E://test2.txt"));
+			br = new BufferedReader(new FileReader("E://testData//blank1.txt"));
 			str = new ArrayList<>();
 			while ((tmp = br.readLine()) != null) {
 				str.add(tmp);

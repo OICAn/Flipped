@@ -107,14 +107,20 @@ public class Diff {
 			if ((endK - startK) != 0) {
 				if ((endK - startK) > 0) {
 					for (int j = 0; j < (endK - startK); j++) {
-						lines.add(new Line(src[srcIndex], 2, srcIndex + 1, null));
+						if (isSimpleChange(src[srcIndex]))
+							lines.add(new Line(src[srcIndex], 2, srcIndex + 1, null, 1));
+						else
+							lines.add(new Line(src[srcIndex], 2, srcIndex + 1, null, 2));
 						// System.out.println("- " + src[srcIndex++]);
 						srcIndex++;
 						startX++;
 					}
 				} else {
 					for (int j = 0; j < Math.abs(endK - startK); j++) {
-						lines.add(new Line(dst[dstIndex], 1, null, dstIndex + 1));
+						if (isSimpleChange(dst[dstIndex]))
+							lines.add(new Line(dst[dstIndex], 1, null, dstIndex + 1, 1));
+						else
+							lines.add(new Line(dst[dstIndex], 1, null, dstIndex + 1, 2));
 						dstIndex++;
 						// System.out.println("+ " + dst[dstIndex++]);
 					}
@@ -122,11 +128,19 @@ public class Diff {
 			}
 			for (int j = startX; j < currPoint.getxEnd(); j++) {
 				// System.out.println(" " + src[srcIndex]);
-				lines.add(new Line(src[srcIndex], 0, srcIndex + 1, dstIndex + 1));
+				lines.add(new Line(src[srcIndex], 0, srcIndex + 1, dstIndex + 1, 0));
 				srcIndex++;
 				dstIndex++;
 			}
 		}
+	}
+
+	protected boolean isSimpleChange(String str) {
+		return isBlanked(str);
+	}
+
+	protected boolean isBlanked(String str) {
+		return str.trim().length() == 0;
 	}
 
 	protected String getLineJSON() {
