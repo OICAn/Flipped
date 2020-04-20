@@ -1,12 +1,22 @@
 package com.jackiifilwhh.services;
 
+
+import com.alibaba.fastjson.JSON;
+
 public class Test {
 
-	public static void main(String[] args) {
-		String str1 = "\t\tint a = 520;";
-		String str2 = "\t\tint a = 350;";
-		levenshtein(str1, str2);
-		System.out.println(EditDistance(str1, str2));
+	public static void main(String[] args) throws CloneNotSupportedException {
+		Line line1 = new Line("ÄãÉñÉñ¶ù£¡", 0, 1, 1);
+		Line line2 = (Line) line1.clone();
+		System.out.println(JSON.toJSONString(line1));
+		System.out.println(JSON.toJSONString(line2));
+		line1.setStatus(2);
+		System.out.println(JSON.toJSONString(line1));
+		System.out.println(JSON.toJSONString(line2));
+		Line line3 = line1;
+		line3.setStatus(1);
+		System.out.println(JSON.toJSONString(line1));
+		System.out.println(JSON.toJSONString(line2));
 	}
 
 	public static void levenshtein(String str1, String str2) {

@@ -2,7 +2,7 @@ package com.jackiifilwhh.services;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-public class Line {
+public class Line implements Cloneable{
 	@JSONField(name = "text")
 	private String text;
 	// 0 不变 1增加 2减少
@@ -30,6 +30,12 @@ public class Line {
 			this.dstRow = dstRow;
 		else
 			this.dstRow = 0;
+	}
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
 	}
 
 	public int getSrcRow() {

@@ -13,6 +13,8 @@ public class Diff {
 	private ArrayList<Line> lines;
 	private ArrayList<Line> usualChanges;
 	private ArrayList<Line> unusualChanges;
+	private ArrayList<Line> tmpDelete;
+	private ArrayList<Line> tmpInsert;
 	private int srcLength;
 	private int dstLength;
 	private int oriX;
@@ -29,6 +31,8 @@ public class Diff {
 		lines = new ArrayList<>();
 		usualChanges = new ArrayList<>();
 		unusualChanges = new ArrayList<>();
+		tmpDelete = new ArrayList<>();
+		tmpInsert = new ArrayList<>();
 	}
 
 	public void myers() {
@@ -114,7 +118,8 @@ public class Diff {
 						if (isSimpleChange(src[srcIndex]))
 							usualChanges.add(new Line(src[srcIndex], 2, srcIndex + 1, null));
 						else
-							unusualChanges.add(new Line(src[srcIndex], 2, srcIndex + 1, null));
+							tmpDelete.add(new Line(src[srcIndex], 2, srcIndex + 1, null));
+						// unusualChanges.add(new Line(src[srcIndex], 2, srcIndex + 1, null));
 						lines.add(new Line(src[srcIndex], 2, srcIndex + 1, null));
 						// System.out.println("- " + src[srcIndex++]);
 						srcIndex++;
@@ -125,7 +130,8 @@ public class Diff {
 						if (isSimpleChange(dst[dstIndex]))
 							usualChanges.add(new Line(dst[dstIndex], 1, null, dstIndex + 1));
 						else
-							unusualChanges.add(new Line(dst[dstIndex], 1, null, dstIndex + 1));
+							tmpInsert.add(new Line(dst[dstIndex], 1, null, dstIndex + 1));
+						// unusualChanges.add(new Line(dst[dstIndex], 1, null, dstIndex + 1));
 						lines.add(new Line(dst[dstIndex], 1, null, dstIndex + 1));
 						dstIndex++;
 						// System.out.println("+ " + dst[dstIndex++]);
@@ -139,10 +145,11 @@ public class Diff {
 				dstIndex++;
 			}
 		}
+		isChangeValue();
 	}
 
 	public boolean isSimpleChange(String str) {
-		//isBank只能放在第一个，用于筛选空串，避免后面方法出错
+		// isBank只能放在第一个，用于筛选空串，避免后面方法出错
 		return isBlanked(str) || isNotes(str);
 	}
 
@@ -151,27 +158,32 @@ public class Diff {
 	}
 
 	public boolean isNotes(String str) {
-		return str.trim().substring(0,2).equals("//");
-		//注释掉下面语句是为了能够正确处理包含在代码中的注释的语句
-		//return str.contains("//");
+		return str.trim().substring(0, 2).equals("//");
+		// 注释掉下面语句是为了能够正确处理包含在代码中的注释的语句
+		// return str.contains("//");
+	}
+
+	@SuppressWarnings("unchecked")
+	private void isChangeValue() {
+		if (tmpDelete.size() == 0) {
+			unusualChanges = (ArrayList<Line>) tmpInsert.clone();
+			return;
+		}
+		if (tmpInsert.size() == 0) {
+			unusualChanges = (ArrayList<Line>) tmpDelete.clone();
+			return;
+		}
+		int deleteNum = tmpDelete.size(), insertNum = tmpInsert.size();
+		int indexDelete = 0, indexInsert = 0;
 	}
 	
-	public boolean isChangeValue(String str) {
-		return true;
+	private String match() {
+		String matchResult = "";
+		return matchResult;
 	}
 
-	public String getLineJSON() {
+	public String getLineJSON(ArrayList<Line> lines) {
 		return JSON.toJSONString(lines, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue,
-				SerializerFeature.WriteDateUseDateFormat);
-	}
-
-	public String getUsualJSON() {
-		return JSON.toJSONString(usualChanges, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue,
-				SerializerFeature.WriteDateUseDateFormat);
-	}
-
-	public String getUnusualJSON() {
-		return JSON.toJSONString(unusualChanges, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue,
 				SerializerFeature.WriteDateUseDateFormat);
 	}
 
@@ -191,6 +203,46 @@ public class Diff {
 	public void setDst(String[] dst) {
 		this.dst = dst;
 		dstLength = dst.length;
+	}
+
+	public ArrayList<Line> getLines() {
+		return lines;
+	}
+
+	public void setLines(ArrayList<Line> lines) {
+		this.lines = lines;
+	}
+
+	public ArrayList<Line> getUsualChanges() {
+		return usualChanges;
+	}
+
+	public void setUsualChanges(ArrayList<Line> usualChanges) {
+		this.usualChanges = usualChanges;
+	}
+
+	public ArrayList<Line> getUnusualChanges() {
+		return unusualChanges;
+	}
+
+	public void setUnusualChanges(ArrayList<Line> unusualChanges) {
+		this.unusualChanges = unusualChanges;
+	}
+
+	public ArrayList<Line> getTmpDelete() {
+		return tmpDelete;
+	}
+
+	public void setTmpDelete(ArrayList<Line> tmpDelete) {
+		this.tmpDelete = tmpDelete;
+	}
+
+	public ArrayList<Line> getTmpInsert() {
+		return tmpInsert;
+	}
+
+	public void setTmpInsert(ArrayList<Line> tmpInsert) {
+		this.tmpInsert = tmpInsert;
 	}
 
 }
