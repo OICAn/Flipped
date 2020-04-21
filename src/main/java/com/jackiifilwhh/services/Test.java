@@ -2,21 +2,13 @@ package com.jackiifilwhh.services;
 
 
 import com.alibaba.fastjson.JSON;
+import com.jackiifilwhh.Java.SYM;
+
 
 public class Test {
 
 	public static void main(String[] args) throws CloneNotSupportedException {
-		Line line1 = new Line("ÄãÉñÉñ¶ù£¡", 0, 1, 1);
-		Line line2 = (Line) line1.clone();
-		System.out.println(JSON.toJSONString(line1));
-		System.out.println(JSON.toJSONString(line2));
-		line1.setStatus(2);
-		System.out.println(JSON.toJSONString(line1));
-		System.out.println(JSON.toJSONString(line2));
-		Line line3 = line1;
-		line3.setStatus(1);
-		System.out.println(JSON.toJSONString(line1));
-		System.out.println(JSON.toJSONString(line2));
+		System.out.println(SYM._abstract==SYM._abstract);
 	}
 
 	public static void levenshtein(String str1, String str2) {

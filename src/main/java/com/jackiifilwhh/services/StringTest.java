@@ -11,7 +11,7 @@ public class StringTest {
 
 	public static void main(String[] args) {
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("E://testData//raw.txt"));
+			BufferedReader br = new BufferedReader(new FileReader("E://testData//raw3.txt"));
 			String tmp = null;
 			List<String> str = new ArrayList<>();
 			while ((tmp = br.readLine()) != null) {
@@ -23,7 +23,7 @@ public class StringTest {
 			tmp = null;
 			str = null;
 			br = null;
-			br = new BufferedReader(new FileReader("E://testData//unusual2.txt"));
+			br = new BufferedReader(new FileReader("E://testData//changeValue4.txt"));
 			str = new ArrayList<>();
 			while ((tmp = br.readLine()) != null) {
 				str.add(tmp);
@@ -44,6 +44,8 @@ public class StringTest {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
 	}

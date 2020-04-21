@@ -1,6 +1,6 @@
 package com.jackiifilwhh.services;
 
-import Java.JavaAnalysis;
+import com.jackiifilwhh.Java.JavaAnalysis;
 
 public class testJSON {
 
