@@ -41,6 +41,11 @@ public class Diff {
 		tmpDelete = new ArrayList<>();
 		tmpInsert = new ArrayList<>();
 	}
+	
+	public void myersDiff() throws CloneNotSupportedException {
+		myers();
+		showDiff();
+	}
 
 	public void myers() {
 		int max = srcLength + dstLength;

@@ -11,7 +11,7 @@ public class StringTest {
 
 	public static void main(String[] args) {
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("E://testData//raw3.txt"));
+			BufferedReader br = new BufferedReader(new FileReader("E://testData//raw2.txt"));
 			String tmp = null;
 			List<String> str = new ArrayList<>();
 			while ((tmp = br.readLine()) != null) {
@@ -23,7 +23,7 @@ public class StringTest {
 			tmp = null;
 			str = null;
 			br = null;
-			br = new BufferedReader(new FileReader("E://testData//changeValue4.txt"));
+			br = new BufferedReader(new FileReader("E://testData//changeValue3.txt"));
 			str = new ArrayList<>();
 			while ((tmp = br.readLine()) != null) {
 				str.add(tmp);
@@ -33,8 +33,7 @@ public class StringTest {
 			br.close();
 
 			Diff diff = new Diff(src, dst);
-			diff.myers();
-			diff.showDiff();
+			diff.myersDiff();
 			System.out.println(diff.getLineJSON(diff.getLines()));
 			System.out.println("------------------------------------------------------");
 			System.out.println(diff.getLineJSON(diff.getUsualChanges()));
