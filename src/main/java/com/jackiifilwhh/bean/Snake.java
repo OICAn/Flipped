@@ -1,4 +1,4 @@
-package com.jackiifilwhh.services;
+package com.jackiifilwhh.bean;
 
 public class Snake {
 	private int xStart;

@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jackiifilwhh.bean.Diff;
+
 public class StringTest {
 
 	public static void main(String[] args) {

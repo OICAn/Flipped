@@ -1,4 +1,4 @@
-package com.jackiifilwhh.services;
+package com.jackiifilwhh.bean;
 
 import java.util.ArrayList;
 
